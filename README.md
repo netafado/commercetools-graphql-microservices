@@ -2,6 +2,12 @@
 
 This project is a boilerplate for integrating Commercetools with your backend using AWS Lambda functions, GraphQL, and Nx for monorepo management.
 
+
+https://github.com/user-attachments/assets/adb1a9e9-e2f5-416b-b5fe-aa5aaa95fa76
+
+
+
+
 ## Project Structure
 
 ```
