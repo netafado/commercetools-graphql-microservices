@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM template for the gateway service
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs20.x
+    MemorySize: 128
+
+Resources:
+  GatewayFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main.graphqlHandler
+      CodeUri: ./dist
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaVPCAccessExecutionRole
+      Environment:
+        Variables:
+          NODE_ENV: development
+          CTP_CLIENT_ID:
+          CTP_CLIENT_SECRET:
+          CTP_AUTH_URL:
+          CTP_API_URL:
+          CTP_PROJECT_KEY:
+          CTP_SCOPES:
+      Events:
+        GraphqlApi:
+          Type: Api
+          Properties:
+            Path: /graphql
+            Method: ANY

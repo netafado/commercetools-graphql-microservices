@@ -1,0 +1,67 @@
+{
+  "name": "@ecommerce/gateway",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "platform": "node",
+          "thirdParty": true,
+          "outputPath": "apps/services/gateway/dist",
+          "format": [
+            "cjs"
+          ],
+          "main": "apps/services/gateway/src/main.ts",
+          "tsConfig": "apps/services/gateway/tsconfig.app.json",
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      },
+      "serve": {
+        "continuous": true,
+        "executor": "nx:run-commands",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "command": "sam local start-api -t apps/services/gateway/template.yaml --port 4000",
+          "parallel": false
+        }
+      },
+      "deploy": {
+        "continuous": true,
+        "executor": "nx:run-commands",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "command": "sam deploy --guided --template-file apps/services/gateway/template.yaml",
+          "parallel": false
+        }
+      },
+      "test": {
+        "options": {
+          "passWithNoTests": true
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@apollo/server": "^4.12.1",
+    "@as-integrations/aws-lambda": "^3.1.0",
+    "@graphql-tools/stitch": "^9.4.28",
+    "graphql": "^16.11.0"
+  }
+}
