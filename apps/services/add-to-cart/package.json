@@ -1,0 +1,71 @@
+{
+  "name": "@ecommerce/add-to-cart",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "platform": "node",
+          "outputPath": "apps/services/add-to-cart/dist",
+          "format": [
+            "cjs"
+          ],
+          "bundle": false,
+          "main": "apps/services/add-to-cart/src/main.ts",
+          "tsConfig": "apps/services/add-to-cart/tsconfig.app.json",
+          "assets": [
+            "apps/services/add-to-cart/src/assets"
+          ],
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "configurations": {
+          "development": {},
+          "production": {
+            "esbuildOptions": {
+              "sourcemap": false,
+              "outExtension": {
+                ".js": ".js"
+              }
+            }
+          }
+        }
+      },
+      "serve": {
+        "continuous": true,
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "@ecommerce/add-to-cart:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@ecommerce/add-to-cart:build:development"
+          },
+          "production": {
+            "buildTarget": "@ecommerce/add-to-cart:build:production"
+          }
+        }
+      },
+      "test": {
+        "options": {
+          "passWithNoTests": true
+        }
+      }
+    }
+  }
+}
