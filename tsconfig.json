@@ -8,6 +8,15 @@
     },
     {
       "path": "./apps/ecommerce"
+    },
+    {
+      "path": "./apps/services/add-to-cart"
+    },
+    {
+      "path": "./common"
+    },
+    {
+      "path": "./apps/services/gateway"
     }
   ]
 }
